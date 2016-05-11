@@ -113,9 +113,7 @@ public class GlobalSettings : Object {
       var lngs = getLangs();
       for (var i=0; i < lngs.length; i++) {
         var l = lngs[i];
-        if (l.id == langId) {
-          stderr.printf(langId);
-          stderr.printf(i.to_string());
+        if (l.id == langId) {          
           return i;
         }
       }

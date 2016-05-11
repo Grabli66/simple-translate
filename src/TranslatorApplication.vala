@@ -12,5 +12,6 @@ internal class TranslateApplication : Granite.Application {
         }
 
         this.mainWindow.show_all();
+        Gtk.main ();
     }
 }

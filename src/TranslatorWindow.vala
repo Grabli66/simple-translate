@@ -77,7 +77,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         leftLangCombo.active = 0;
 
 
-		    rightLangCombo = new Gtk.ComboBox();
+	rightLangCombo = new Gtk.ComboBox();
         rightLangCombo.set_margin_right(10);
         rightLangCombo.pack_start (renderer, true);
         rightLangCombo.add_attribute (renderer, "text", 0);
@@ -105,9 +105,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         _leftHeader.pack_start(changeButton);
         _leftHeader.pack_start(rightLangCombo);
         _leftHeader.set_custom_title(new Gtk.Label(""));
-        //_leftHeader.pack_start(voiceButton);
         _leftHeader.pack_start(dictButton);
-        //_leftHeader.pack_start(settingsButton);
 
         // Right dictionary header
         _rightHeader = new Gtk.HeaderBar ();
@@ -126,10 +124,8 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         _rightHeader.pack_end(_wordInput);
 
         _headerSeparator = new Gtk.Separator(Gtk.Orientation.VERTICAL);
-        _headerSeparator.get_style_context().add_class("dark-separator");
 
         _headerPane.pack_start (_leftHeader, true, true, 0);
-        _headerPane.pack_start (_headerSeparator, false, false, 0);
         _headerPane.pack_start (_rightHeader, true, true, 0);
 
         this.set_titlebar (_headerPane);
@@ -143,10 +139,10 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         // Content
         _contentBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
         _leftBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+	_leftBox.expand = true;
         _rightBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
         _contentSeparator = new Gtk.Separator(Gtk.Orientation.VERTICAL);
         _contentSeparator.get_style_context().add_class("dark-separator");
-        _leftBox.set_size_request(357, 0);
 
         _contentBox.pack_start(_leftBox, false, true);
         _contentBox.pack_start(_contentSeparator, false, false);

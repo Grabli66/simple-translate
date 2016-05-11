@@ -18,8 +18,7 @@ public class WebJsonClient : GLib.Object {
 
     var status = session.send_message (message);
     var mess = (string)message.response_body.data;
-    parser.load_from_data (mess);
-    stderr.printf(mess);
+    parser.load_from_data (mess);    
     return parser.get_root ().get_object ();
   }
 }
