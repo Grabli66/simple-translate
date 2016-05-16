@@ -15,7 +15,7 @@ public class Main : Object {
         opt_context.add_main_entries (options, null);
         opt_context.parse (ref args);
         var global = GlobalSettings.instance();
-        var settings = new Settings ("skyprojects.eos.translator");
+        var settings = get_settings ("skyprojects.eos.translator");
 
         var sourceLang = global.LoadSourceLang();
         var destLang = global.LoadDestLang();
@@ -34,6 +34,7 @@ public class Main : Object {
 
     Gtk.init (ref args);
     var app = new TranslateApplication();
+    Gtk.IconTheme.get_default().add_resource_path("@CMAKE_INSTALL_PREFIX@");
     return app.run (null);
   }
 }

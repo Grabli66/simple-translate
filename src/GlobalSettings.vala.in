@@ -6,7 +6,7 @@ public class LangInfo : Object {
 public class GlobalSettings : Object {
     public static int PROXY_MODE_NONE = 0;
     public static int SERVER_RESPOND_TIMEOUT = 10;
-    private string TRANSLATOR_PATH = "/usr/share/translator";
+    private string TRANSLATOR_PATH = "@CMAKE_INSTALL_PREFIX@";
     private string _sourceStartLang = "en";
     private string _destStartLang = "ru";
     private LangInfo[] _langs;
@@ -14,7 +14,7 @@ public class GlobalSettings : Object {
     private Settings _settings;
 
     private GlobalSettings() {
-      _settings = new Settings ("skyprojects.eos.translator");
+      _settings = get_settings ("skyprojects.eos.translator");
     }
 
     public static GlobalSettings instance() {
@@ -52,18 +52,19 @@ public class GlobalSettings : Object {
     }
 
     public static Soup.URI getProxyUri() {
-        var settings = new Settings("org.gnome.system.proxy");
+        var settings = get_settings("org.gnome.system.proxy");
         var mode = settings.get_enum("mode");
         if (mode == PROXY_MODE_NONE) {
             return null;
         }
 
-        settings = new Settings("org.gnome.system.proxy.http");
+        settings = get_settings("org.gnome.system.proxy.http");
         var host = settings.get_string("host");
         var port = settings.get_int("port");
         var proxyUri = new Soup.URI(@"http://$host:$port");
         return proxyUri;
     }
+
 
     public LangInfo[] getLangs() {
         if (_langs != null) return _langs;
@@ -109,11 +110,12 @@ public class GlobalSettings : Object {
         return _langs;
     }
 
+
     public int getLangIndex(string langId) {
       var lngs = getLangs();
       for (var i=0; i < lngs.length; i++) {
         var l = lngs[i];
-        if (l.id == langId) {          
+        if (l.id == langId) {
           return i;
         }
       }

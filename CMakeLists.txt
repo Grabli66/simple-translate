@@ -25,10 +25,16 @@ include (ValaPrecompile)
 add_definitions (-DGETTEXT_PACKAGE="translator")
 
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 libsoup-2.4 gee-0.8 gio-2.0 granite gthread-2.0 json-glib-1.0)
+pkg_check_modules(DEPS REQUIRED gtk+-3.0 libsoup-2.4 gee-0.8 gio-2.0 gthread-2.0 json-glib-1.0)
 add_definitions(${DEPS_CFLAGS})
+add_definitions(-g)
 link_libraries(${DEPS_LIBRARIES})
 link_directories(${DEPS_LIBRARY_DIRS})
+
+configure_file (src/Main.vala.in src/Main.vala)
+configure_file (src/Settings.vala.in src/Settings.vala)
+configure_file (src/GlobalSettings.vala.in src/GlobalSettings.vala)
+execute_process (COMMAND glib-compile-schemas data)
 
 vala_precompile(VALA_C ${EXEC_NAME}
     src/Main.vala
@@ -40,13 +46,15 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/TranslatorService.vala
     src/DictionaryService.vala
     src/WebJsonClient.vala
+    src/Settings.vala
 PACKAGES
     gtk+-3.0
-    granite
+    gee-0.8
     libsoup-2.4
     json-glib-1.0
 OPTIONS
     --thread
+    --target-glib 2.38
 )
 
 add_executable(${EXEC_NAME} ${VALA_C})
