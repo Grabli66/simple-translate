@@ -1,4 +1,4 @@
-internal class TranslateApplication : Granite.Application {
+internal class TranslateApplication : Gtk.Application {
     public TranslateWindow mainWindow;
 
     public TranslateApplication() {
@@ -12,6 +12,5 @@ internal class TranslateApplication : Granite.Application {
         }
 
         this.mainWindow.show_all();
-        Gtk.main ();
     }
 }

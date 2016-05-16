@@ -243,13 +243,6 @@ public class TranslateWindow : Gtk.ApplicationWindow {
 
         HideDictionary();
 
-        var style = @"
-                .dark-separator {
-                    color: #888;
-                }
-                ";
-        Granite.Widgets.Utils.set_theming_for_screen (this.get_screen (), style, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
         this.destroy.connect(OnWindowDestroy);
     }
 
@@ -452,6 +445,6 @@ public class TranslateWindow : Gtk.ApplicationWindow {
       var global = GlobalSettings.instance();
       global.SaveSourceLang(leftLang);
       global.SaveDestLang(rightLang);
-      Gtk.main_quit ();
+      base.destroy();
     }
 }
