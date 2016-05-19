@@ -18,7 +18,6 @@ public class WordInfo {
 
 // Service that get word's info from Yandex dictionary service
 public class DictionaryService : AsyncTaskExecuter {
-  private const string API_KEY = "dict.1.1.20150726T191533Z.aa2d3a3f5122d94c.aa319cbc89e74736fb2a2ec874c31610796ad862&ui=en";
   private string _word;
   private WordInfo _result;
   private string _sourceLang;
@@ -33,7 +32,7 @@ public class DictionaryService : AsyncTaskExecuter {
 
   public static string GetSpeechPart(string s) {
     switch (s) {
-      case "noun":        
+      case "noun":
         return _("Noun");
       case "adverb":
           return _("Adverb");
@@ -58,7 +57,7 @@ public class DictionaryService : AsyncTaskExecuter {
 
   public override void OnExecute() {
     var word = Soup.URI.encode(_word, null);
-    var request = @"https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=$(API_KEY)&lang=$(_sourceLang)-$(_destLang)&text=$(word)&ui=en";
+    var request = @"https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=$(DICT_API_KEY)&lang=$(_sourceLang)-$(_destLang)&text=$(word)&ui=en";
     var root = WebJsonClient.Get(request);
 
     if (root != null) {

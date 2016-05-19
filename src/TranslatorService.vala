@@ -1,6 +1,5 @@
 // Translation service that use Yandex translate
-public class TranslateService : AsyncTaskExecuter {  
-  private const string API_KEY = "trnsl.1.1.20150427T160217Z.69da78079263823e.0f0caa9724cee126c18028e70f227b633a3fe58f";
+public class TranslateService : AsyncTaskExecuter {
   private string[] _result;
   private string _from;
   private string _to;
@@ -14,7 +13,7 @@ public class TranslateService : AsyncTaskExecuter {
 
   public override void OnExecute() {
     var ntext = Soup.URI.encode(_text, null);
-    var request = @"https://translate.yandex.net/api/v1.5/tr.json/translate?key=$(API_KEY)&lang=$(_from)-$(_to)&text=$(ntext)";
+    var request = @"https://translate.yandex.net/api/v1.5/tr.json/translate?key=$(TRNSL_API_KEY)&lang=$(_from)-$(_to)&text=$(ntext)";
     var root = WebJsonClient.Get(request);
     var data = new Gee.ArrayList<string>();
 

@@ -16,9 +16,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with Translate.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Author:
- *        Jerry Casiano <JerryCasiano@gmail.com>
 */
 
 const string [] POSSIBLE_SCHEMA_DIRS = {
