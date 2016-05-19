@@ -40,7 +40,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
 
     private const int MAX_CHARS = 500;                                 // Max size of translating text
 
-    private LangInfo[] langs;
+    private Language[] langs;
 
     private string leftLang;
     private string rightLang;
