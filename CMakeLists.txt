@@ -9,8 +9,8 @@ set (PKGDATADIR "${DATADIR}/translator")
 set (GETTEXT_PACKAGE ${CMAKE_PROJECT_NAME})
 set (EXEC_NAME "translator")
 set (RELEASE_NAME "translator")
-set (VERSION "0.7")
-set (VERSION_INFO "0.7")
+set (VERSION "0.9.4")
+set (VERSION_INFO "0.9.4")
 set (PREFIX ${CMAKE_INSTALL_PREFIX})
 
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -31,9 +31,9 @@ add_definitions (-g)
 link_libraries (${DEPS_LIBRARIES})
 link_directories (${DEPS_LIBRARY_DIRS})
 
-configure_file (src/Main.vala.in src/Main.vala)
-configure_file (src/Settings.vala.in src/Settings.vala)
-configure_file (src/GlobalSettings.vala.in src/GlobalSettings.vala)
+configure_file (src/Main.vala.in ../src/Main.vala)
+configure_file (src/Settings.vala.in ../src/Settings.vala)
+configure_file (src/GlobalSettings.vala.in ../src/GlobalSettings.vala)
 execute_process (COMMAND glib-compile-schemas data)
 
 vala_precompile(VALA_C ${EXEC_NAME}

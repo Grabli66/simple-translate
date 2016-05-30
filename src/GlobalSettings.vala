@@ -2,7 +2,7 @@
 public class GlobalSettings : Object {
     public static int PROXY_MODE_NONE = 0;
     public static int SERVER_RESPOND_TIMEOUT = 10;
-    private string TRANSLATOR_PATH = "@CMAKE_INSTALL_PREFIX@/share/translator";
+    private string TRANSLATOR_PATH = "/usr/share/translator";
     private string _sourceStartLang = "en";
     private string _destStartLang = "ru";
     private Language [] _langs;

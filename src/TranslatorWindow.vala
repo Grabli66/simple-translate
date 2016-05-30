@@ -44,8 +44,19 @@ public class TranslateWindow : Gtk.ApplicationWindow {
 
     private string leftLang;
     private string rightLang;
+    
+    private string _cssStyle = """
+    GtkWindow
+    {
+        border-color: #333333;
+        border-style: solid;
+        border-width: 1px;
+    }
+    """;
 
     public TranslateWindow() {
+        ApplyCss();
+        
         langs = global.getLangs();
 
         service = new TranslateService();
@@ -57,6 +68,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         this.window_position = Gtk.WindowPosition.CENTER;
         this.set_gravity(Gdk.Gravity.CENTER);
         this.set_resizable(false);
+        this.set_decorated(true);
 
         Gdk.RGBA bgColor = Gdk.RGBA();
         bgColor.red = 1;
@@ -77,7 +89,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         leftLangCombo.active = 0;
 
 
-	rightLangCombo = new Gtk.ComboBox();
+	    rightLangCombo = new Gtk.ComboBox();
         rightLangCombo.set_margin_right(10);
         rightLangCombo.pack_start (renderer, true);
         rightLangCombo.add_attribute (renderer, "text", 0);
@@ -139,7 +151,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         // Content
         _contentBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
         _leftBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
-	_leftBox.expand = true;
+        _leftBox.expand = true;
         _rightBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
         _contentSeparator = new Gtk.Separator(Gtk.Orientation.VERTICAL);
         _contentSeparator.get_style_context().add_class("dark-separator");
@@ -244,6 +256,14 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         HideDictionary();
 
         this.destroy.connect(OnWindowDestroy);
+    }
+    
+    // Apply css style
+    private void ApplyCss() {
+        var provider = new Gtk.CssProvider();
+        provider.load_from_data(_cssStyle, _cssStyle.length);
+        var screen = get_screen();
+        Gtk.StyleContext.add_provider_for_screen(screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_USER);      
     }
 
     private void OnDictToggle() {
