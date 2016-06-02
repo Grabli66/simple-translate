@@ -31,9 +31,9 @@ add_definitions (-g)
 link_libraries (${DEPS_LIBRARIES})
 link_directories (${DEPS_LIBRARY_DIRS})
 
-configure_file (src/Main.vala.in ../src/Main.vala)
-configure_file (src/Settings.vala.in ../src/Settings.vala)
-configure_file (src/GlobalSettings.vala.in ../src/GlobalSettings.vala)
+configure_file (src/Main.vala.in src/Main.vala)
+configure_file (src/Settings.vala.in src/Settings.vala)
+configure_file (src/GlobalSettings.vala.in src/GlobalSettings.vala)
 execute_process (COMMAND glib-compile-schemas data)
 
 vala_precompile(VALA_C ${EXEC_NAME}
@@ -42,12 +42,11 @@ vala_precompile(VALA_C ${EXEC_NAME}
     src/TranslatorWindow.vala
     src/GlobalSettings.vala
     src/Assets.vala
-    src/AsyncTaskExecuter.vala
-    src/TranslatorService.vala
-    src/DictionaryService.vala
-    src/WebJsonClient.vala
+    src/JsonWebClient.vala
     src/Settings.vala
     src/Utils.vala
+    src/Yandex/TranslationService.vala
+    src/Yandex/DictionaryService.vala
 PACKAGES
     gtk+-3.0
     gee-0.8

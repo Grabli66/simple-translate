@@ -74,7 +74,7 @@ public Gee.ArrayList <Language>? get_supported_languages () {
     Gee.ArrayList <Language>? result = null;
     const string url = "https://translate.yandex.net/api/v1.5/tr.json/getLangs?ui=%s&key=%s";
     string request = url.printf(get_preferred_language(), TRNSL_API_KEY);
-    Json.Object response = WebJsonClient.Get(request);
+    Json.Object response = JsonWebClient.get_json_response(request).get_object();
     if (response != null) {
         Json.Object langs = response.get_object_member("langs");
         result = new Gee.ArrayList <Language> ();
@@ -88,4 +88,25 @@ public Gee.ArrayList <Language>? get_supported_languages () {
     return result;
 }
 
+internal enum ProxyMode {
+    NONE,
+    AUTO,
+    MANUAL;
+}
+
+/**
+ * get_default_proxy_uri:
+ *
+ * @return      #Soup.URI
+ */
+public Soup.URI get_default_proxy_uri() {
+    var settings = get_settings("org.gnome.system.proxy");
+    if (settings.get_enum("mode") != ProxyMode.MANUAL)
+        return null;
+    settings = get_settings("org.gnome.system.proxy.http");
+    var host = settings.get_string("host");
+    var port = settings.get_int("port");
+    var proxy = new Soup.URI(@"http://$host:$port");
+    return proxy;
+}
 
