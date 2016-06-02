@@ -106,7 +106,6 @@ public Soup.URI get_default_proxy_uri() {
     settings = get_settings("org.gnome.system.proxy.http");
     var host = settings.get_string("host");
     var port = settings.get_int("port");
-    var proxy = new Soup.URI(@"http://$host:$port");
-    return proxy;
+    return new Soup.URI(@"http://$host:$port");
 }
 

@@ -8,7 +8,6 @@ namespace Yandex {
         public override void process_response (Json.Node? root_node) {
             if (status_code != 200 || root_node == null)
                 return;
-            var data = new Gee.ArrayList<string>();
             var strings = root_node.get_object().get_array_member("text");
             var sb = new StringBuilder();
             if (strings != null) {
