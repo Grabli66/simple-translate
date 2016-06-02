@@ -90,8 +90,8 @@ public Gee.ArrayList <Language>? get_supported_languages () {
 
 internal enum ProxyMode {
     NONE,
-    AUTO,
-    MANUAL;
+    MANUAL,
+    AUTO;
 }
 
 /**
