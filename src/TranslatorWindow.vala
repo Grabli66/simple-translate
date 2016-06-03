@@ -1,6 +1,8 @@
 public class TranslateWindow : Gtk.ApplicationWindow {
-    private TranslateService service;
-    private DictionaryService _dictService;
+
+
+    private Yandex.TranslationService service;
+    private Yandex.DictionaryService _dictService;
 
     private GlobalSettings global = GlobalSettings.instance();
 
@@ -59,10 +61,10 @@ public class TranslateWindow : Gtk.ApplicationWindow {
         
         langs = global.getLangs();
 
-        service = new TranslateService();
+        service = new Yandex.TranslationService();
         service.result.connect(onTranslate);
 
-        _dictService = new DictionaryService();
+        _dictService = new Yandex.DictionaryService();
         _dictService.result.connect(OnDictResult);
 
         this.window_position = Gtk.WindowPosition.CENTER;
@@ -408,13 +410,16 @@ public class TranslateWindow : Gtk.ApplicationWindow {
     }
 
     private void onUpdate() {
+
         if (topText.buffer.text.length < 1) {
             bottomText.buffer.text = "";
             topLabelLen.set_markup(@"<span size=\"small\" color=\"#555555\">0/$MAX_CHARS</span>");
             return;
         }
 
-        if ((leftLang == null) || (rightLang == null)) return;
+        if ((leftLang == null) || (rightLang == null))
+            return;
+        service.update(leftLang, rightLang, topText.buffer.text);
         var len = topText.buffer.text.length;
         if (len > MAX_CHARS) {
             var txt = topText.buffer.text.slice(0, MAX_CHARS);
@@ -422,17 +427,14 @@ public class TranslateWindow : Gtk.ApplicationWindow {
             return;
         }
         topLabelLen.set_markup(@"<span size=\"small\" color=\"#555555\">$len/$MAX_CHARS</span>");
-
-        service.Translate(leftLang, rightLang, topText.buffer.text);
     }
 
-    private void onTranslate(string[] text) {
-        if ((text == null) || (text.length < 1)) return;
-        if (topText.buffer.text.length < 1) {
-            bottomText.buffer.text = "";
+    private void onTranslate(string text) {
+        if ((text == null) || (text.length < 1))
             return;
+        lock (bottomText) {
+            bottomText.buffer.text = topText.buffer.text.length > 1 ? text : "";
         }
-        bottomText.buffer.text = string.joinv("", text);
     }
 
     // Search in dictionary
@@ -447,7 +449,7 @@ public class TranslateWindow : Gtk.ApplicationWindow {
       _dictText.buffer.get_end_iter(out iter);
 
       foreach (var c in data.WordCategories) {
-        string txt = DictionaryService.GetSpeechPart(c.Category) + "\n";
+        string txt = Yandex.DictionaryService.GetSpeechPart(c.Category) + "\n";
 
         _dictText.buffer.insert_with_tags(ref iter, txt, txt.length, _headerTag, null);
         _dictText.buffer.insert_with_tags(ref iter, "\n", 1, _normalTag, null);

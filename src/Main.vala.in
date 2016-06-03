@@ -8,7 +8,7 @@ public class Main : Object {
     { null }
   };
 
-  public static int main (string[] args) {
+  public static int main (string [] args) {
     try {
         var opt_context = new OptionContext ("- Translator app");
         opt_context.set_help_enabled (true);
@@ -33,7 +33,6 @@ public class Main : Object {
     }
 
     Gtk.init (ref args);
-    var app = new TranslateApplication();
-    return app.run (null);
+    return new TranslateApplication().run (args);
   }
 }
